@@ -187,7 +187,7 @@ def move():
             writer.write('GAME OVER',font = ('Arial',30,'bold'))
             return
     #velocidad
-    ontimer(move, 100)
+    ontimer(move, 50)
 
 def change(x, y):
     "Change pacman aim if valid."
