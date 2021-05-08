@@ -144,11 +144,27 @@ def move():
     #dibuja el pacman
     dot(20, 'yellow')
     
-    k=0
-    for point, course in ghosts:
+    k = 0
+    
+     for point, course in ghosts:
         #valida si el fantasma se puede mover
-        if valid(point + course):
+        #FANTASMA MÁS INTELIGENTE
+        if pacman.x > point.x and valid(point + vector(5,0)):
+            course = vector(5,0)
             point.move(course)
+
+        elif pacman.x < point.x and valid(point + vector(-5,0)):
+            course = vector(-5,0)
+            point.move(course)
+        
+        elif pacman.y > point.y and valid(point + vector(0,5)):
+            course = vector(0,5)
+            point.move(course)
+            
+        elif pacman.y < point.y and valid(point + vector(0,-5)):
+            course = vector(0,-5)
+            point.move(course)
+            
         #si el fantasma no se puede mover
         else:
             options = [
@@ -158,17 +174,9 @@ def move():
                 vector(0, -5),
             ]
             #guarda la nueva posición del fantasma
-            #FANTASMA MÁS INTELIGENTE
             plan = choice(options)
             course.x = plan.x
             course.y = plan.y
-
-        up()
-        #mueve a la posición del fantasma
-        goto(point.x + 10, point.y + 10)
-        #dibuja el fantasma
-        dot(15, colores[k])
-        k = k + 1
 
     update()
 
@@ -179,7 +187,7 @@ def move():
             writer.write('GAME OVER',font = ('Arial',30,'bold'))
             return
     #velocidad
-    ontimer(move, 100)
+    ontimer(move, 50)
 
 def change(x, y):
     "Change pacman aim if valid."
